@@ -10,9 +10,9 @@ def test_io_monthly():
     pytest function for io of monthly netcdf file
     """
 
-    # try with SASS
-    myds = ubs.ncfileio.get_monthly_data("./data", "SASS", verbose=True)
-    sass_months = len(myds["time"])
+    # # try with SASS
+    # myds = ubs.ncfileio.get_monthly_data("./data", "SASS", verbose=True)
+    # sass_months = len(myds["time"])
 
     # try with ERS
     myds = ubs.ncfileio.get_monthly_data("./data", "ERS", verbose=True)
@@ -26,7 +26,7 @@ def test_io_monthly():
     myds = ubs.ncfileio.get_monthly_data("./data", "ASCAT", verbose=True)
     ascat_months = len(myds["time"])
 
-    assert sass_months == 3
+    # assert sass_months == 3
     assert ers_months == 96
     assert qscat_months == 125
     assert ascat_months == 168
@@ -37,11 +37,11 @@ def test_io_seasonal_masked():
     pytest function for io of seasonal masked netcdf file
     """
 
-    # try with SASS
-    myds = ubs.ncfileio.get_seasonal_data(
-        "./data", "SASS", season="JAS", masked=True, verbose=True
-    )
-    sass_years = len(myds["time"])
+    # # try with SASS
+    # myds = ubs.ncfileio.get_seasonal_data(
+    #     "./data", "SASS", season="JAS", masked=True, verbose=True
+    # )
+    # sass_years = len(myds["time"])
 
     # try with ERS
     myds = ubs.ncfileio.get_seasonal_data(
@@ -61,7 +61,7 @@ def test_io_seasonal_masked():
     )
     ascat_years = len(myds["time"])
 
-    assert sass_years == 1
+    # assert sass_years == 1
     assert ers_years == 8
     assert qscat_years == 11
     assert ascat_years == 14
