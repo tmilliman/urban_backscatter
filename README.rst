@@ -4,7 +4,7 @@ urban_backscatter
 
 
 A collection of python scripts for interacting with the NetCDF files
-produced for the Urban Backscatter `dataset <https://www.ciesin.columbia.edu/data/seasonal-urban-backscatter/>`__ submitted to Scientific
+produced for the `Seasonal Urban Backscatter (1993 - 2020) dataset <https://www.ciesin.columbia.edu/data/seasonal-urban-backscatter/>`__ submitted to Scientific
 Data August 2021.  The data paper only describes the "seasonal" data set but this
 repository also includes scripts to work with the monthly data.
 
