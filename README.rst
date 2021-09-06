@@ -4,10 +4,11 @@ urban_backscatter
 
 
 A collection of python scripts for interacting with the NetCDF files
-produced for the Urban Backscatter dataset submitted to Scientific
-Data August 2021.  The data paper only describes the "seasonal" data
-set but this repository also includes scripts to work with the monthly
-data.
+produced for the Urban Backscatter `dataset <https://www.ciesin.columbia.edu/data/seasonal-urban-backscatter/>`__ submitted to Scientific
+Data August 2021
+
+The data paper only describes the "seasonal" data set but this
+repository also includes scripts to work with the monthly data.
 
 
 Introduction
@@ -15,7 +16,7 @@ Introduction
 
 This is a collection of scripts used to extract CSV files from the
 seasonal and monthly NetCDF data files.  The scripts have been developed
-in a miniconda (https://docs.conda.io/en/latest/miniconda.html)
+in a `miniconda <https://docs.conda.io/en/latest/miniconda.html>`__.
 environment.  You can recreate the equivalent environment using the
 ``environment.yml`` file::
 
