@@ -54,9 +54,9 @@ if __name__ == "__main__":
         "-d",
         "--datadir",
         nargs="?",
-        help=("data directory for output and finding netcdf files"),
-        const="./",
-        default="./",
+        help=("data directory for output and finding netcdf files. Default: ./data"),
+        const="./data",
+        default="./data",
     )
 
     # add positional arguments
