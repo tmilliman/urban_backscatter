@@ -123,13 +123,20 @@ if __name__ == "__main__":
         default=False,
     )
 
+    # parser.add_argument(
+    #     "--with-sass",
+    #     help="include SASS data in CSV",
+    #     action="store_true",
+    #     default=False,
+    # )
+
     parser.add_argument(
         "-d",
         "--datadir",
         nargs="?",
         help=("data directory for output and finding netcdf files"),
-        const="./",
-        default="./",
+        const="./data",
+        default="./data",
     )
 
     # add positional arguments
@@ -144,6 +151,8 @@ if __name__ == "__main__":
     lat = args.lat
     lon = args.lon
     locname = args.locname
+    # withsass = args.with_sass
+    withsass = False
     datadir = args.datadir
 
     if verbose:
@@ -151,6 +160,7 @@ if __name__ == "__main__":
         print("date: {}".format(today))
         print("location: {} {}".format(lon, lat))
         print("name: {}".format(locname))
+        # print("include SASS: {}".format(withsass))
         print("data directory: {}".format(datadir))
 
     # get 11x11 box around center location
@@ -159,25 +169,26 @@ if __name__ == "__main__":
     if verbose:
         print("Bounding Box:  {} {} {} {}".format(lonmin, latmin, lonmax, latmax))
 
-    # extract SeaSAT data
-    monthly_sass_ds = ubs.ncfileio.get_monthly_data(datadir, "SASS", verbose=True)
+    if withsass:
+        # extract SeaSAT data
+        monthly_sass_ds = ubs.ncfileio.get_monthly_data(datadir, "SASS", verbose=True)
 
-    # subset DataSet
-    # get a xarray data slice for box around the city
-    sass_start_date = "1978-07-01"
-    sass_end_date = "1978-10-01"
-    sass_monthly = monthly_sass_ds.sel(
-        time=slice(sass_start_date, sass_end_date),
-        lon=slice(lonmin, lonmax),
-        lat=slice(latmax, latmin),
-    )
-    if verbose:
-        print("SASS data size: {}".format(sass_monthly["sig0"].shape))
+        # subset DataSet
+        # get a xarray data slice for box around the city
+        sass_start_date = "1978-07-01"
+        sass_end_date = "1978-10-01"
+        sass_monthly = monthly_sass_ds.sel(
+            time=slice(sass_start_date, sass_end_date),
+            lon=slice(lonmin, lonmax),
+            lat=slice(latmax, latmin),
+        )
+        if verbose:
+            print("SASS data size: {}".format(sass_monthly["sig0"].shape))
 
-    sass_df = ds_to_df(sass_monthly, "SASS")
+        sass_df = ds_to_df(sass_monthly, "SASS")
 
-    if verbose:
-        print(sass_df.head())
+        if verbose:
+            print(sass_df.head())
 
     # extract ERS1/2 data
     monthly_ers_ds = ubs.ncfileio.get_monthly_data(datadir, "ERS", verbose=True)
@@ -239,7 +250,12 @@ if __name__ == "__main__":
     if verbose:
         print(ascat_df.head())
 
-    df1 = pd.merge(sass_df, ers_df, how="left", on=["latitude", "longitude"])
+    # merge data from all four/three instruments
+    if withsass:
+        df1 = pd.merge(sass_df, ers_df, how="left", on=["latitude", "longitude"])
+    else:
+        df1 = ers_df
+
     df2 = pd.merge(df1, qscat_df, how="left", on=["latitude", "longitude"])
     df3 = pd.merge(df2, ascat_df, how="left", on=["latitude", "longitude"])
 
